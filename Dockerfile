@@ -21,3 +21,11 @@ RUN echo "radphp ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
  && echo "radphp:radphp"|chpasswd \
  && sudo -u radphp -H sh -c "export SHELL=/usr/bin/zsh; curl -L http://install.ohmyz.sh | bash" \
  && sudo -u radphp -H sh -c "sed -i 's/ZSH_THEME=\".*\"/ZSH_THEME=\"maran\"/g' /home/radphp/.zshrc"
+
+# Install Adminer
+RUN mkdir -p /srv/tools/adminer \
+ && cd /srv/tools/adminer \
+ && curl -SLO http://www.adminer.org/latest.php \
+ && curl -SLO https://raw.githubusercontent.com/pappu687/adminer-theme/master/adminer.css \
+ && curl -SLO https://raw.githubusercontent.com/pappu687/adminer-theme/master/adminer-bg.png \
+ && mv latest.php index.php
