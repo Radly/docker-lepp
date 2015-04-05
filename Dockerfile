@@ -29,3 +29,10 @@ RUN mkdir -p /srv/tools/adminer \
  && curl -SLO https://raw.githubusercontent.com/pappu687/adminer-theme/master/adminer.css \
  && curl -SLO https://raw.githubusercontent.com/pappu687/adminer-theme/master/adminer-bg.png \
  && mv latest.php index.php
+
+# Install phpPgAdmin
+RUN mkdir -p /srv/tools/phppgadmin \
+ && cd /srv/tools/phppgadmin \
+ && git clone git://github.com/phppgadmin/phppgadmin.git . \
+ && mv conf/config.inc.php-dist conf/config.inc.php \
+ && sed -i "s/$conf\['extra_login_security'\] = true/$conf\['extra_login_security'\] = false/g" conf/config.inc.php
