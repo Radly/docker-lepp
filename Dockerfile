@@ -11,7 +11,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 89DF5277 \
  && echo "deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main" >> /etc/apt/sources.list.d/postgresql.list \
  && apt-get update \
  && DEBCONF_FRONTEND=noninteractive apt-get install -y curl sudo zsh git zip dnsutils mlocate logrotate locales nano \
-                        nginx openssh-server postgresql-client postgresql redis-tools supervisor \
+                        nginx openssh-server postgresql-client postgresql \
                         php5-cli php5-curl php-pear php5-dev php5-fpm php5-gd php5-intl php5-pgsql php5-redis php5-xdebug php5-xsl \
  && rm -rf /var/lib/apt/lists/*
 
@@ -50,3 +50,22 @@ RUN cp /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/radphp.conf \
  && sed -i "s/;date.timezone =/date.timezone = Asia\/Tehran/g" /etc/php5/cli/php.ini \
  && sed -i "s/upload_max_filesize = .*/upload_max_filesize = 12M/g" /etc/php5/fpm/php.ini \
  && sed -i "s/post_max_size = .*/post_max_size = 128M/g" /etc/php5/fpm/php.ini
+
+# Config Nginx
+COPY ./assets/configs/nginx/default /etc/nginx/sites-available/
+
+# Add init script
+COPY ./assets/configs/init.sh /opt/
+RUN chmod a+x /opt/init.sh
+
+WORKDIR /srv/www
+ENTRYPOINT ["/opt/init.sh"]
+CMD ["start"]
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8   
+ENV LC_ALL en_US.UTF-8
+
+EXPOSE 80
+EXPOSE 8080
+EXPOSE 443
