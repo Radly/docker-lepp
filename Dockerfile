@@ -55,7 +55,7 @@ RUN cp /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/radphp.conf \
 COPY ./assets/configs/nginx/default /etc/nginx/sites-available/
 
 # Add init script
-COPY ./assets/configs/init.sh /opt/
+COPY ./assets/init.sh /opt/
 RUN chmod a+x /opt/init.sh
 
 WORKDIR /srv/www
