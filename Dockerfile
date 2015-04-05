@@ -36,3 +36,17 @@ RUN mkdir -p /srv/tools/phppgadmin \
  && git clone git://github.com/phppgadmin/phppgadmin.git . \
  && mv conf/config.inc.php-dist conf/config.inc.php \
  && sed -i "s/$conf\['extra_login_security'\] = true/$conf\['extra_login_security'\] = false/g" conf/config.inc.php
+
+# PHP Config
+RUN cp /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/\[www\]/\[radphp\]/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/user = www-data/user = radphp/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/group = www-data/group = radphp/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/listen = \/var\/run\/php5-fpm.sock/listen = \/var\/run\/php5-fpm-radphp.sock/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/listen.owner = www-data/listen.owner = radphp/g" /etc/php5/fpm/pool.d/radphp.conf \ 
+ && sed -i "s/listen.group = www-data/listen.group = radphp/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php5/fpm/pool.d/radphp.conf \
+ && sed -i "s/;date.timezone =/date.timezone = Asia\/Tehran/g" /etc/php5/fpm/php.ini \
+ && sed -i "s/;date.timezone =/date.timezone = Asia\/Tehran/g" /etc/php5/cli/php.ini \
+ && sed -i "s/upload_max_filesize = .*/upload_max_filesize = 12M/g" /etc/php5/fpm/php.ini \
+ && sed -i "s/post_max_size = .*/post_max_size = 128M/g" /etc/php5/fpm/php.ini
