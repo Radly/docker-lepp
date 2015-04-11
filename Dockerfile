@@ -55,6 +55,7 @@ RUN cp /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/radphp.conf \
 
 # Config Nginx
 COPY ./assets/configs/nginx/default /etc/nginx/sites-available/
+COPY ./assets/configs/nginx/radphp /etc/nginx/sites-enabled/
 
 # Add init script
 COPY ./assets/init.sh /opt/
