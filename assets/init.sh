@@ -5,9 +5,9 @@ set -e
 case "$1" in
 
 start)
-        /etc/init.d/ssh start
-	/etc/init.d/php5-fpm start
-	/etc/init.d/postgresql start
+        service ssh start
+	service php5-fpm start
+	service postgresql start
         nginx -g "daemon off;"
     ;;
 provision)
