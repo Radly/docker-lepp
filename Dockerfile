@@ -19,7 +19,7 @@ RUN chmod 755 /opt/radphp/init.sh
 RUN /opt/radphp/install.sh
 
 WORKDIR /srv/www
-ENTRYPOINT ["/opt/init.sh"]
+ENTRYPOINT ["/opt/radphp/init.sh"]
 CMD ["start"]
 
 EXPOSE 80 8080 443 5432
