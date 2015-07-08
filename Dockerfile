@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Mohammad Abdoli Rad <m.abdolirad@gmail.com>
 
-RUN echo "deb http://mirror.leaseweb.net/debian/ stable main" >> /etc/apt/sources.list \
+RUN echo "deb http://mirror.leaseweb.net/debian/ stable main" > /etc/apt/sources.list \
     && echo "deb http://mirror.leaseweb.net/debian/ jessie-updates main" >> /etc/apt/sources.list \
     && echo "deb http://security.debian.org/ jessie/updates main" >> /etc/apt/sources.list \
     && apt-get update \
