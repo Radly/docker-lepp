@@ -1,12 +1,13 @@
 server {
     listen 80;
     server_name localhost 127.0.0.1;
-    set $root   /srv/www/web;
+    set $root   /srv/www;
+    set $web   "${root}/web";
     client_max_body_size 20M;
     location ~ \.php$ {
         fastcgi_pass   unix:/var/run/php5-fpm-radphp.sock;
         fastcgi_index  index.php;
-        root           $root;
+        root           $web;
         fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
         fastcgi_param  QUERY_STRING       $query_string;
         fastcgi_param  REQUEST_METHOD     $request_method;
@@ -36,21 +37,34 @@ server {
         fastcgi_buffer_size 64k;
         fastcgi_read_timeout 600;
     }
-    location / {
+
+    location ~* ^.+\.(css|js|gif|jpg|png|ico)$ {
         root $root;
+
+        if (-f "${web}${document_uri}") {
+            rewrite ^/(.*)$ /web/$1 last;
+            break;
+        }
+
+        if (!-f $request_filename) {
+            rewrite ^/(.*?)/(.*)$ /src/$1/Resource/asset/$2 break;
+            return 404;
+        }
+
+        access_log off;
+        expires max;
+    }
+
+    location / {
+        root $web;
         index index.php;
 
         rewrite ^index.php(.*)$ /index.php?_url=/$1 last;
 
-        # Everything is directed to index.php, unless the file actually exists wit$
+        # Everything is directed to index.php, unless the file actually exists
         if (!-f $request_filename) {
-            rewrite ^/(.*)$ /index.php?_url=/$1  last;
+            rewrite ^/(.*)$ /index.php?_url=/$1 last;
             break;
-        }
-
-        location ~* ^.+\.(css|js|gif|jpg|png|ico)$ {
-            access_log off;
-            expires max;
         }
     }
 }
