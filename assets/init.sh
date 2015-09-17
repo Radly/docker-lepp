@@ -31,7 +31,7 @@ appStart () {
 
   echo 'Start ...'
   service ssh start
-  /usr/local/bin/svscanboot
+  /usr/local/bin/svscanboot &
   service php5-fpm start
   service postgresql start
   nginx -g "daemon off;"
