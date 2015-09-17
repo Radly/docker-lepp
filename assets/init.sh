@@ -4,9 +4,10 @@ set -e
 RAD_PASSWORD="${RAD_PASSWORD:-radphp}"
 ROOT_PASSWORD="${ROOT_PASSWORD:-rootphp}"
 
+RADPHP_POSTGRES_PASSWORD="${RADPHP_POSTGRES_PASSWORD:-radphp}"
+
 RADPHP_NGINX_LISTEN="${RADPHP_NGINX_LISTEN:-80}"
 RADPHP_NGINX_SERVER_NAME="${RADPHP_NGINX_SERVER_NAME:-localhost 127.0.0.1}"
-
 DEFAULT_NGINX_LISTEN="${DEFAULT_NGINX_LISTEN:-8080}"
 DEFAULT_NGINX_SERVER_NAME="${DEFAULT_NGINX_SERVER_NAME:-localhost 127.0.0.1}"
 
@@ -26,6 +27,10 @@ appInit () {
   nginxConfig
 }
 
+afterStart () {
+  echo "ALTER ROLE postgres WITH PASSWORD '$RADPHP_POSTGRES_PASSWORD';" | sudo -u postgres psql
+}
+
 appStart () {
   appInit
 
@@ -34,6 +39,9 @@ appStart () {
   /usr/local/bin/svscanboot &
   service php5-fpm start
   service postgresql start
+
+  afterStart
+
   nginx -g "daemon off;"
 }
 
