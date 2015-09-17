@@ -14,8 +14,8 @@ nginxConfig () {
   sed 's/{{RADPHP_NGINX_LISTEN}}/'"${RADPHP_NGINX_LISTEN}"'/' -i /etc/nginx/sites-enabled/radphp
   sed 's/{{RADPHP_NGINX_SERVER_NAME}}/'"${RADPHP_NGINX_SERVER_NAME}"'/' -i /etc/nginx/sites-enabled/radphp
 
-  sed 's/{{DEFAULT_NGINX_LISTEN}}/'"${DEFAULT_NGINX_LISTEN}"'/' -i /etc/nginx/sites-enabled/radphp
-  sed 's/{{DEFAULT_NGINX_SERVER_NAME}}/'"${DEFAULT_NGINX_SERVER_NAME}"'/' -i /etc/nginx/sites-enabled/radphp
+  sed 's/{{DEFAULT_NGINX_LISTEN}}/'"${DEFAULT_NGINX_LISTEN}"'/' -i /etc/nginx/sites-enabled/default
+  sed 's/{{DEFAULT_NGINX_SERVER_NAME}}/'"${DEFAULT_NGINX_SERVER_NAME}"'/' -i /etc/nginx/sites-enabled/default
 }
 
 appInit () {
