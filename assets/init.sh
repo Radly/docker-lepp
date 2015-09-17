@@ -4,10 +4,26 @@ set -e
 RAD_PASSWORD="${RAD_PASSWORD:-radphp}"
 ROOT_PASSWORD="${ROOT_PASSWORD:-rootphp}"
 
+RADPHP_NGINX_LISTEN="${RADPHP_NGINX_LISTEN:-80}"
+RADPHP_NGINX_SERVER_NAME="${RADPHP_NGINX_SERVER_NAME:-localhost 127.0.0.1}"
+
+DEFAULT_NGINX_LISTEN="${DEFAULT_NGINX_LISTEN:-8080}"
+DEFAULT_NGINX_SERVER_NAME="${DEFAULT_NGINX_SERVER_NAME:-localhost 127.0.0.1}"
+
+nginxConfig () {
+  sed 's/{{RADPHP_NGINX_LISTEN}}/'"${RADPHP_NGINX_LISTEN}"'/' -i /etc/nginx/sites-enabled/radphp
+  sed 's/{{RADPHP_NGINX_SERVER_NAME}}/'"${RADPHP_NGINX_SERVER_NAME}"'/' -i /etc/nginx/sites-enabled/radphp
+
+  sed 's/{{DEFAULT_NGINX_LISTEN}}/'"${DEFAULT_NGINX_LISTEN}"'/' -i /etc/nginx/sites-enabled/radphp
+  sed 's/{{DEFAULT_NGINX_SERVER_NAME}}/'"${DEFAULT_NGINX_SERVER_NAME}"'/' -i /etc/nginx/sites-enabled/radphp
+}
+
 appInit () {
   echo 'Init ...'
   echo "radphp:$RAD_PASSWORD" | chpasswd
   echo "root:$ROOT_PASSWORD" | chpasswd
+
+  nginxConfig
 }
 
 appStart () {

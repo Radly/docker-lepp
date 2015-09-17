@@ -1,6 +1,6 @@
 server {
-    listen 80;
-    server_name localhost 127.0.0.1;
+    listen {{RADPHP_NGINX_LISTEN}};
+    server_name {{RADPHP_NGINX_SERVER_NAME}};
     set $root   /srv/www;
     set $web   "${root}/web";
     client_max_body_size 20M;
