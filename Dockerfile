@@ -22,4 +22,4 @@ WORKDIR /srv/www
 ENTRYPOINT ["/opt/radphp/init.sh"]
 CMD ["start"]
 
-EXPOSE 80 8080 443 5432
+EXPOSE 80 8080 443 5432 53/udp
