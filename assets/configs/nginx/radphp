@@ -38,7 +38,7 @@ server {
         fastcgi_read_timeout 600;
     }
 
-    location ~* ^.+\.(css|js|gif|jpg|png|ico|woff|ttf|html)$ {
+    location ~* ^.+\.(css|js|gif|jpg|png|ico|woff|woff2|ttf|html)$ {
         root $root;
 
         if (-f "${web}${document_uri}") {
