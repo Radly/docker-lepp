@@ -57,8 +57,8 @@ sed -i "s/listen = \/var\/run\/php5-fpm.sock/listen = \/var\/run\/php5-fpm-radph
 sed -i "s/listen.owner = www-data/listen.owner = $RAD_USER/g" /etc/php5/fpm/pool.d/radphp.conf
 sed -i "s/listen.group = www-data/listen.group = $RAD_GROUP/g" /etc/php5/fpm/pool.d/radphp.conf
 sed -i "s/;listen.mode = 0660/listen.mode = 0666/g" /etc/php5/fpm/pool.d/radphp.conf
-sed -i "s/;date.timezone =/date.timezone = Asia\/Tehran/g" /etc/php5/fpm/php.ini
-sed -i "s/;date.timezone =/date.timezone = Asia\/Tehran/g" /etc/php5/cli/php.ini
+sed -i "s/;date.timezone =.*/date.timezone = UTC/g" /etc/php5/fpm/php.ini
+sed -i "s/;date.timezone =.*/date.timezone = UTC/g" /etc/php5/cli/php.ini
 sed -i "s/upload_max_filesize = .*/upload_max_filesize = 12M/g" /etc/php5/fpm/php.ini
 sed -i "s/post_max_size = .*/post_max_size = 128M/g" /etc/php5/fpm/php.ini
 sed -i "s/display_errors = Off/display_errors = On/g" /etc/php5/fpm/php.ini
